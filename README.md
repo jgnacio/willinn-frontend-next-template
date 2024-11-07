@@ -32,6 +32,23 @@ La estructura sigue un patrón común en aplicaciones Next.js de mediana a gran 
 
 2. Abre una terminal en el directorio del proyecto.
 
+3. Crea un archivo para las variables de entorno `.env.local`
+
+### Configuracion Inicial (Recomendada Docker):
+
+1. Iniciar Contenedor Docker de willinn-backend-template
+2. Configurar como Localhost y en el puerto del contenedor docker `5001` en la variable de entorno `WILLIN_REST_API_URL`
+   ```bash
+   WILLIN_REST_API_URL="http://localhost:5001"
+   ```
+
+### Configuracion Inicial (Manual):
+
+2. Configurar como Localhost y en el puerto `5000` en la variable de entorno `WILLIN_REST_API_URL`
+   ```bash
+   WILLIN_REST_API_URL="http://localhost:5000"
+   ```
+
 #### Ejecucion Manual
 
 1. Instala los paquetes de Node
