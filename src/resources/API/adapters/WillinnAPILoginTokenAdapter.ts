@@ -12,24 +12,17 @@ export class WillinAPILoginTokenAdapter implements ITokenRepository {
 
   constructor() {}
 
-  async getToken(credential: Credentials): Promise<TokenDTO> {
-    if (!credential.email || !credential.password) {
+  async setToken(credentials: Credentials): Promise<TokenDTO> {
+    if (!credentials.email || !credentials.password) {
       throw new Error("Invalid credentials");
-    }
-
-    if (
-      WillinAPILoginTokenAdapter.TOKEN.token &&
-      WillinAPILoginTokenAdapter.TOKEN.expiration > new Date()
-    ) {
-      return WillinAPILoginTokenAdapter.TOKEN;
     }
 
     const response = await axios
       .post(
         `${this.REST_API_URL}/users/login`,
         {
-          email: credential.email,
-          password: credential.password,
+          email: credentials.email,
+          password: credentials.password,
         },
         {
           headers: {
@@ -43,14 +36,21 @@ export class WillinAPILoginTokenAdapter implements ITokenRepository {
         }
         return response.data;
       })
-      .catch((error) => {
-        console.error(error);
-      });
-
+      .catch((error) => {});
     WillinAPILoginTokenAdapter.TOKEN = {
       token: response.token,
       expiration: new Date(response.expiration),
     };
+    return WillinAPILoginTokenAdapter.TOKEN;
+  }
+
+  async getToken(): Promise<TokenDTO> {
+    if (
+      WillinAPILoginTokenAdapter.TOKEN.token &&
+      WillinAPILoginTokenAdapter.TOKEN.expiration > new Date()
+    ) {
+      return WillinAPILoginTokenAdapter.TOKEN;
+    }
 
     return WillinAPILoginTokenAdapter.TOKEN;
   }

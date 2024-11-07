@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 export const getCredentials = async (email: string, password: string) => {
   const willinApiLogin = new WillinAPILoginTokenAdapter();
   try {
-    const token = await willinApiLogin.getToken({ email, password });
+    const token = await willinApiLogin.setToken({ email, password });
     cookies().set("token", token.token, {
       path: "/",
       httpOnly: true,

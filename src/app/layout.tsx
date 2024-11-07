@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 const inter = Poppins({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["200", "400"],
 });
 
 export const metadata: Metadata = {
