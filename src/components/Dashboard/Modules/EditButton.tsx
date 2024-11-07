@@ -142,12 +142,6 @@ export default function EditButton({ user }: { user: UserDTO }) {
     closed: { width: "2rem" },
   };
 
-  useEffect(() => {
-    if (userToUpdate) {
-      console.log(userToUpdate);
-    }
-  }, [userToUpdate]);
-
   return (
     <div>
       <motion.button

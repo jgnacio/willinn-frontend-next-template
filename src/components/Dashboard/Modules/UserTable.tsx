@@ -1,14 +1,20 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { UserDTO } from "@/domain/User/entities/UserEntity";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import { getUsers } from "../_actions/get-users";
 import EditButton from "./EditButton";
 
 export function UserTable() {
   const { toast } = useToast();
+
+  const [userFiltered, setUserFiltered] = useState<UserDTO[]>([]);
+
+  const [search, setSearch] = useState("");
 
   const {
     isLoading: isLoadingUsers,
@@ -24,12 +30,14 @@ export function UserTable() {
         variant: "destructive",
       });
     },
+    onSuccess: (data) => {
+      setUserFiltered(data);
+    },
   });
 
   const handleGetToken = async () => {
     const response = await axios(`${window.location.origin}/api/auth-status`)
       .then((response) => {
-        console.log(response.data);
         return response.data;
       })
       .catch((error) => {
@@ -43,6 +51,15 @@ export function UserTable() {
     return response.tokenObj.token;
   };
 
+  const handleChangueSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    if (!users) return;
+    const filtered = users.filter((user) =>
+      user.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setUserFiltered(filtered);
+  };
+
   return (
     <Card className="space-y-0">
       <CardHeader className="py-4 px-7">
@@ -51,6 +68,8 @@ export function UserTable() {
           <div className="relative flex items-center">
             <Search className="absolute left-6  w-[20px] text-tertiary " />
             <Input
+              value={search}
+              onChange={handleChangueSearch}
               placeholder="Buscar"
               className="px-14 w-[255px] rounded-full text-tertiary placeholder:text-tertiary bg-background border-0"
             />
@@ -58,7 +77,7 @@ export function UserTable() {
         </div>
       </CardHeader>
       <CardContent className="">
-        {users && users.length > 0 ? (
+        {userFiltered && userFiltered.length > 0 ? (
           <table className="w-full">
             <thead className="">
               <tr>
@@ -68,7 +87,7 @@ export function UserTable() {
               </tr>
             </thead>
             <tbody className="">
-              {users.map((user, index) => (
+              {userFiltered.map((user, index) => (
                 <tr key={index} className="border-t">
                   <td className="w-[250px] text-tertiary">{user.name}</td>
                   <td className="p-2 text-tertiary">{user.email}</td>
