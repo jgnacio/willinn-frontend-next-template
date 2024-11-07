@@ -15,7 +15,7 @@ export function AddUserForm() {
     lastName: "",
     email: "",
     password: "",
-    active: true,
+    isActive: true,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +39,7 @@ export function AddUserForm() {
         lastName: string;
         email: string;
         password: string;
-        active: boolean;
+        isActive: boolean;
       };
       token: string;
     }) => {
@@ -53,7 +53,7 @@ export function AddUserForm() {
       userToAdd.lastName &&
       userToAdd.email &&
       userToAdd.password &&
-      userToAdd.active
+      userToAdd.isActive
     ) {
       await server_saveUser({
         user: userToAdd,
@@ -85,9 +85,9 @@ export function AddUserForm() {
   };
 
   return (
-    <Card>
+    <Card className="space-y-0 min-h-[300px] max-h-[5000px]">
       <CardHeader>
-        <h2 className="text-2xl font-semibold">Agregar usuario</h2>
+        <h2 className="text-xl font-semibold">Agregar usuario</h2>
       </CardHeader>
       <CardContent className="px-0">
         <form
@@ -95,9 +95,9 @@ export function AddUserForm() {
             e.preventDefault();
             handleSaveUser();
           }}
-          className="space-y-6"
+          className="space-y-2"
         >
-          <div className="px-10 space-y-6">
+          <div className="px-10 py-4 space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-semibold">Nombre</label>
               <Input
@@ -117,7 +117,7 @@ export function AddUserForm() {
               />
             </div>
           </div>
-          <div className="border-t px-10 py-6 space-y-6">
+          <div className="border-t px-10 py-4 space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-semibold">E-mail</label>
               <Input
@@ -141,9 +141,15 @@ export function AddUserForm() {
             <div className="flex items-center space-x-4">
               <label className="text-sm font-semibold">Activar</label>
               <Switch
-                checked={userToAdd.active}
+                // checked={userToAdd.isActive}
+                defaultChecked={userToAdd.isActive}
                 onChange={() =>
-                  setUserToAdd({ ...userToAdd, active: !userToAdd.active })
+                  setUserToAdd((prev) => {
+                    return {
+                      ...prev,
+                      active: !prev.isActive,
+                    };
+                  })
                 }
               />
             </div>

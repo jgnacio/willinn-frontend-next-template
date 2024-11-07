@@ -7,7 +7,7 @@ export const saveUser = async (
     lastName: string;
     email: string;
     password: string;
-    active: boolean;
+    isActive: boolean;
   },
   token: string
 ) => {

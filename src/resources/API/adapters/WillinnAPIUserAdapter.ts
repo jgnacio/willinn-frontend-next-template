@@ -32,7 +32,7 @@ export class WillinAPIUserAdapter implements IUserRepository {
       lastName: string;
       email: string;
       password: string;
-      active: boolean;
+      isActive: boolean;
     },
     token: string
   ) {

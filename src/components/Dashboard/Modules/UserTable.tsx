@@ -61,7 +61,7 @@ export function UserTable() {
   };
 
   return (
-    <Card className="space-y-0">
+    <Card className="space-y-0 min-h-[300px] max-h-[5000px]">
       <CardHeader className="py-4 px-7">
         <div className="flex items-center justify-between">
           <h2 className="font-medium">Usuarios</h2>
