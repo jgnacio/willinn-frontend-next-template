@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# willinn-frontend-next-template
 
-## Getting Started
+Willinn Front-End Template desarrollada en Next.js para la interfaz de gestión de usuarios en conjunto con [willinn-backend-template](https://github.com/jgnacio/Willinn-backend-api-template/tree/develop "willinn-backend-template"). Como parte de la
+prueba técnica para Trainee, esta aplicación web conecta la sesión de usuarios administrada por el RESTfull API de Backend y provee una solucion practica e intuitiva para el uso del mismo, además de aplicar los principios de **Clean Architecture**, se usaron Librerías como **Shadcn** para componentes reutilizables de UI, **ReactQuery(TankStack4)** para la gestion de stados y peticiones en Caché de la REST API, **Axios** para el fetching de datos, **framer-motion** para algunas animaciones, **lucide-react** para los iconos y **svgr/Webpack** para los iconos Custom.
 
-First, run the development server:
+## Estructura General
+
+La estructura sigue un patrón común en aplicaciones Next.js de mediana a gran escala. Se divide en las siguientes secciones principales:
+
+- **src**: Contiene el código fuente de la aplicación.
+  - **app**: Es la nueva forma de organizar aplicaciones en Next.js 13+, proporcionando una estructura más flexible y escalable.
+  - **components**: Almacena componentes reutilizables de la interfaz de usuario.
+  - **domain**: Contiene la lógica de negocio de la aplicación, como entidades, repositorios.
+  - **resources**: Gestiona recursos externos como APIs.
+  - **Icons**: Carpeta con iconos Custom en SVG.
+  - **Lib/Functions**: Funciones Auxiliares.
+- **pages**: Contiene una API como backend Interno
+  - **Api**: Contiene las funciones para la obtencion del Token como Credencial
+
+## Ejecución de la Aplicación
+
+### Requisitos Previos
+
+- **Nodejs** ([Descargar Node](https://nodejs.org/en/)
+- **Docker Desktop** ([Descargar Docker](https://www.docker.com/)) (opcional, si prefieres usar Docker)
+
+1. Clona el repositorio:
+
+   ```bash
+   git clone https://github.com/jgnacio/willinn-frontend-next-template.git
+   ```
+
+2. Abre una terminal en el directorio del proyecto.
+
+#### Ejecucion Manual
+
+1. Instala los paquetes de Node
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm i
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Ejecuta la aplicación
+   Opcion1:
+   ```bash
+   npm run dev
+   ```
+   Opcion2(HTTPS Experimental):
+   ```bash
+   npm run devhttps
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### Usando Docker
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Construye la imagen:
 
-## Learn More
+```bash
+docker build -t willinn-frontend-next-template .
+```
 
-To learn more about Next.js, take a look at the following resources:
+Ejecuta un Contenedor con la imagen creada y con el puerto mapeado:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker run -d -p 3000:3000 willinn-frontend-next-template
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Usuario de Prueba
 
-## Deploy on Vercel
+En el entorno de desarrollo de [willinn-backend-template](https://github.com/jgnacio/Willinn-backend-api-template/tree/develop "willinn-backend-template") se proporciona un usuario de prueba para Iniciar sesión:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+User="WillinUserGuest"
+Email="WillinnGuest@gmail.com"
+Passwd="Guest"
+```
