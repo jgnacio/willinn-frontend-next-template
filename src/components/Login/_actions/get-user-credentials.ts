@@ -6,7 +6,7 @@ export const getCredentials = async (email: string, password: string) => {
   const willinApiLogin = new WillinAPILoginTokenAdapter();
   try {
     const token = await willinApiLogin.setToken({ email, password });
-    cookies().set("token", token.token, {
+    cookies().set("token", JSON.stringify(token), {
       path: "/",
       httpOnly: true,
       secure: true,

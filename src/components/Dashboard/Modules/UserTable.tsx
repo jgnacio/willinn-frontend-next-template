@@ -1,25 +1,11 @@
-import { UserDTO } from "@/domain/User/entities/UserEntity";
-import { MoreVertical, PenSquare, Search, Trash2 } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Separator,
-} from "@radix-ui/react-dropdown-menu";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getUsers } from "../_actions/get-users";
 import { useToast } from "@/hooks/use-toast";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Search } from "lucide-react";
+import { getUsers } from "../_actions/get-users";
+import EditButton from "./EditButton";
 
 export function UserTable() {
   const { toast } = useToast();
@@ -43,17 +29,18 @@ export function UserTable() {
   const handleGetToken = async () => {
     const response = await axios(`${window.location.origin}/api/auth-status`)
       .then((response) => {
+        console.log(response.data);
         return response.data;
       })
       .catch((error) => {
         console.error(error);
       });
 
-    if (!response.token) {
+    if (!response.tokenObj) {
       return "";
     }
 
-    return response.token;
+    return response.tokenObj.token;
   };
 
   return (
@@ -85,24 +72,8 @@ export function UserTable() {
                 <tr key={index} className="border-t">
                   <td className="w-[250px] text-tertiary">{user.name}</td>
                   <td className="p-2 text-tertiary">{user.email}</td>
-                  <td className="p-2">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                          <PenSquare className="h-4 w-4 mr-2" />
-                          Editar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Eliminar
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                  <td className="p-2 flex justify-end">
+                    <EditButton user={user} />
                   </td>
                 </tr>
               ))}

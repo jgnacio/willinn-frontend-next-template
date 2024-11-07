@@ -5,5 +5,6 @@ export default function ClassToObject(user: User): UserDTO {
     id: user.id,
     name: user.name,
     email: user.email,
+    isActive: user.isActive,
   };
 }
